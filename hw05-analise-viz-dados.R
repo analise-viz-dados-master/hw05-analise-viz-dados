@@ -21,3 +21,9 @@ df_raw <- read_excel("data/Projecoes-populacionais-municipais-2010-2040_com-pop-
                      range = "A4:BD856",
                      col_names = col_names)
 
+df <- df_raw %>% 
+  pivot_longer(c(-CodigosMunicipios, -Nomemunicipios), 
+               names_to = "var",
+               values_to = "pop") %>% 
+  separate(var, into = c("SEXO", "FAIXA_ETARIA"), sep = "_") %>% 
+  filter(SEXO != "TOTAL", FAIXA_ETARIA != "Total")
